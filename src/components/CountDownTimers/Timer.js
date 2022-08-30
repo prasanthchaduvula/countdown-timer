@@ -1,25 +1,28 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { decrementTimer, removeTimer } from "../../reducers/timers/timerActions";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { removeTimer } from "../../reducers/timers/timerActions";
 import { TimerContext } from "../../App";
 
 function Timer({ id, timer: { currTimeInMs, timerInMs} }) {
   const timerContext = useContext(TimerContext);
+  const [timerCount, setTimerCount] = useState(timerInMs)
 
   const { dispatch } = timerContext;
   const timerRef = useRef(null);
-
+  
   useEffect(() => {
-    timerRef.current = setInterval(() => { dispatch(decrementTimer(id))}, 10);
+    timerRef.current = setInterval(() => { 
+      setTimerCount(prevCount => prevCount - 10)
+    }, 10);
     return () => {
       clearInterval(timerRef.current);
     };
   });
 
   useEffect(() => {
-    if (timerInMs <= currTimeInMs) {
+    if (timerCount <= currTimeInMs) {
       deleteTimer();
     }
-  }, [timerInMs]);
+  }, [timerCount]);
 
   const deleteTimer = () => {
     clearInterval(timerRef);
@@ -27,10 +30,11 @@ function Timer({ id, timer: { currTimeInMs, timerInMs} }) {
   };
 
   const displayTimer = () => {
+    console.log(timerCount)
     const currT = new Date(currTimeInMs)
     const displayCurrTime = `${currT.toLocaleDateString().replaceAll("/", ".")} ${currT.toLocaleTimeString()}`;
 
-    let countDown = new Date(timerInMs)
+    let countDown = new Date(timerCount)
     const displayCountDownTime = `${countDown.getSeconds()}.${countDown.getMilliseconds()}`
 
     return [displayCurrTime, displayCountDownTime]
