@@ -9,10 +9,11 @@ function CreateTimer() {
 
   const createTimer = () => {
     const date = new Date();
+    const timeInMs = date.getTime() + (Number(newTimer) * 1000)
 
     const payload = {
-      currTime: date,
-      timerSec: Number(newTimer)
+      currTimeInMs: date.getTime(),
+      timerInMs: timeInMs
     };
 
     dispatch(addTimer(payload));

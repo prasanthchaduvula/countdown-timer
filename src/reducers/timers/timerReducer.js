@@ -10,7 +10,7 @@ export const timersReducer = (state, action) => {
     case DECREMENT_TIMER:
       return state?.map((item, index) => {
         if (index == action.payload) {
-          item.timerSec -= 10;
+          item.timerInMs -= 10
         }
         return item;
       })
