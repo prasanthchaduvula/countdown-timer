@@ -9,8 +9,7 @@ function Timer({ id, timer: {timerSec, currTime} }) {
   const timerRef = useRef(null);
 
   useEffect(() => {
-    const delay = timerSec < 10 ? 1 : 10000;
-    timerRef.current = setInterval(() => { dispatch(decrementTimer(id))}, delay);
+    timerRef.current = setInterval(() => { dispatch(decrementTimer(id))}, 10000);
     return () => {
       clearInterval(timerRef.current);
     };
