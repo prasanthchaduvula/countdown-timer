@@ -1,0 +1,3 @@
+export const ADD_TIMER = "ADD_TIMER";
+export const DECREMENT_TIMER = "DECREMENT_TIMER";
+export const REMOVE_TIMER = "REMOVE_TIMER"
